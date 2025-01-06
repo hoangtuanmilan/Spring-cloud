@@ -1,0 +1,12 @@
+#truy cập keycloak
+https://localhost:9000 , tk admin/admin
+
+- Tạo client:
++ jmaster, Authentication flow, Standard flow: client scope: read write,  user role: ROLE_ADMIN
+- Tạo client:
++ accountservice, Authentication flow, Service accounts roles  , client scope: log, notification
+
+- Doi thong tin cau hinh o docker-compose.yml cho keycloak trc khi chay
+
+#huong dan chay docker-compose
+docker-compose up -d --build

@@ -1,0 +1,5 @@
+#huong dan chay docker-compose
+1. mo local.env de doi lai ip may localhost cua minh
+2. mo logback-spring.xml de doi localhost ve ip may
+3. Chay lenh ben duoi
+docker-compose up -d --build

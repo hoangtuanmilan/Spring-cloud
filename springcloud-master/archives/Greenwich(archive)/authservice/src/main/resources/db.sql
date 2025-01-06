@@ -1,0 +1,1 @@
+INSERT IGNORE INTO account(name, username, password, role) VALUES ('admin', 'admin', '$2a$10$ur2ks6mr7utd0LriNu2uEuGtkL07dW7C/qrABZ/Prv9z0AEft.o3O','ROLE_ADMIN')

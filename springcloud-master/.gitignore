@@ -1,0 +1,10 @@
+/.metadata/
+/.recommenders/
+logstash-7.15.1-windows-x86_64.zip
+kibana-7.15.1-windows-x86_64.zip
+elasticsearch-7.15.1-windows-x86_64.zip
+*.log
+*.gz
+/tutorials-2024/.idea
+/tutorials/.idea
+/tutorials/section1/.idea

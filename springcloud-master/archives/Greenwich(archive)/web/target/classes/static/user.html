@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="/controller.js"></script>
+
+</head>
+<body ng-app="myApp">
+	<div class="container">
+		<h2>USER PAGE</h2>
+		<a onclick="logout()">Logout</a>
+		<p>Trang hien thi danh sach nguoi dung</p>
+		<hr />
+		<div ng-controller="formCtr">
+			<div class="form-group">
+				<button class="btn btn-primary" data-toggle="modal"
+					data-target="#addDialog">Them moi</button>
+			</div>
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Username</th>
+						<th>ROLE</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="p in persons | orderBy:'id'">
+						<td>{{p.id}}</td>
+						<td>{{p.name}}</td>
+						<td>{{p.username}}</td>
+						<td>{{p.role}}</td>
+						<td>
+							<button ng-click="edit(p)" class="btn btn-warning"
+								data-toggle="modal" data-target="#updateModal">Sua</button>
+
+							<button ng-click="delete(p.id)" class="btn btn-danger"
+								data-toggle="modal" data-target="#deleteDialog">Xoa</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- Modal -->
+			<div class="modal fade" id="addDialog" role="dialog">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Add User</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form" class="form-group">
+								<div class="form-group">
+									<label>Ten:</label> <input class="form-control"
+										required="required" ng-model="person.name" type="text">
+								</div>
+								<div class="form-group">
+									<label>Username:</label> <input class="form-control"
+										ng-model="person.username" type="text">
+								</div>
+								<div class="form-group">
+									<label>Password:</label> <input class="form-control"
+										ng-model="person.password" type="password">
+								</div>
+								<div class="form-group">
+									<label>Role:</label> <select class="form-control"
+										ng-model="person.role">
+										<option value="ROLE_ADMIN">ROLE_ADMIN</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" ng-click="addPerson()"
+										class="btn btn-primary" data-dismiss="modal">Them</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="updateModal" role="dialog">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Update User</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form" class="form-group">
+								<div class="form-group">
+									<label>ID:</label> <input class="form-control"
+										readonly="readonly" ng-model="person.id" type="text">
+								</div>
+								<div class="form-group">
+									<label>Ten:</label> <input class="form-control"
+										required="required" ng-model="person.name" type="text">
+								</div>
+								<div class="form-group">
+									<label>Username:</label> <input class="form-control"
+										ng-model="person.username" type="text">
+								</div>
+								<div class="form-group">
+									<label>Role:</label> <select class="form-control"
+										ng-model="person.role">
+										<option value="ROLE_ADMIN">ROLE_ADMIN</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" ng-click="updatePerson()"
+										class="btn btn-primary" data-dismiss="modal">Cap nhat</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="deleteDialog" role="dialog">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Xac nhan xoa?</h4>
+						</div>
+						<div class="modal-footer">
+							<button ng-click="confirmDelete()" type="button"
+								class="btn btn-danger" data-dismiss="modal">Xóa</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const access_token = localStorage.getItem("access_token");
+		if (!access_token) {
+			window.location.href = "/login.html"
+		}
+
+		/* 		su dung angular thay cho jquery 
+		 function loadData() {
+		 $.ajax({
+		 type : "GET",
+		 url : "http://localhost:8080/account/api/accounts",
+		 dataType : 'json',
+		 headers : {
+		 "Authorization" : "Bearer " + access_token,
+		 "Accept" : "application/json",
+		 "Content-Type" : "application/json"
+		 },
+		 success : function(data) {
+		 console.log(data)
+		 },
+		 error : function(err) {
+		 console.log(err.responseJSON)
+		 }
+		 });
+		 }
+		 */
+		function logout() {
+			localStorage.clear();
+			window.location.href = "/login.html"
+		}
+	</script>
+</body>
+</html>

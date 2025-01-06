@@ -1,0 +1,9 @@
+#0. Mo terminal , tro den thu muc hien tai, chua Dockerfile (fereactjs)
+#1. Chay lenh docker build
+docker build -t fereactjs .
+
+#2. Chay lenh docker run
+docker run -d -p 3000:80 -t fereactjs
+
+
+#Luu y: Khi chay trinh duyet, chuyen ve dia chi 127.0.0.1
